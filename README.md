@@ -50,3 +50,21 @@ No backend, API keys, analytics, or paid services are required. Contact uses you
 Run `npm run build`, then upload `out/` to a static host such as Cloudflare Pages, Netlify or GitHub Pages (root custom domain). For Vercel, use the Next.js preset. For deployment to a subdirectory, configure Next.js `basePath` and prefix local image paths accordingly.
 
 The workspace currently reuses the neighboring project's dependency folder via symlink. A fresh checkout or copy only needs `npm install`; do not distribute `node_modules` or `.next`.
+
+## GitHub Pages: santhureddie/portfolio
+
+The Pages workflow builds and publishes the site at https://santhureddie.github.io/portfolio/.
+Select **GitHub Actions** in the repository's Settings → Pages publishing source.
+The workflow sets `NEXT_PUBLIC_BASE_PATH=/portfolio`, which prefixes Next.js assets,
+illustrations and résumé links. Local development leaves it unset and stays at `/`.
+
+To reproduce the Pages build:
+
+```sh
+npm ci --registry=https://registry.npmjs.org
+NEXT_PUBLIC_BASE_PATH=/portfolio npm run build
+```
+
+The lockfile uses public npm tarball URLs. Avoid regenerating it against an internal
+corporate registry: GitHub-hosted runners cannot fetch those private URLs.
+Pull requests build without publishing; merging to `main` publishes automatically.
