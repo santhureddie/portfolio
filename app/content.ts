@@ -1,3 +1,10 @@
+// Prefix local images and plain anchor links when hosted at /portfolio/.
+// Leave NEXT_PUBLIC_BASE_PATH unset for localhost or a root custom domain.
+export function sitePath(path: string): string {
+  const prefix = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  return path.startsWith('/') && !path.startsWith('//') ? `${prefix}${path}` : path;
+}
+
 // Replace any artwork here. For your own image, use { src: '/images/name.webp', alt: '...' }.
 // atlasIndex is only used for the bundled illustration sheet; omit it for individual images.
 export type Artwork = { src: string; alt: string; atlasIndex?: number; position?: string };
