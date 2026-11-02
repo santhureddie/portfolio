@@ -1,70 +1,136 @@
-# Santhosh — From silicon to systems
+# Santhosh Kumar Reddy Jampana — Portfolio
 
-A responsive Next.js / React / TypeScript portfolio based on the approved charcoal and signal-green design. Oracle is the main feature, followed by four distinct employers and three independent projects.
+**From silicon. To systems.**
+
+My personal engineering portfolio, showcasing work across embedded Linux, ARM64 platforms, boot and recovery systems, voice AI, telecom networks, and connected devices.
+
+[Portfolio](https://santhureddie.github.io/portfolio/) · [LinkedIn](https://www.linkedin.com/in/santhoshjampana/) · [GitHub](https://github.com/santhureddie) · [Email](mailto:santhoshkumarreddyjampana@gmail.com)
+
+## About me
+
+I’m an Embedded Linux and Platform Software Engineer based in Redwood City, California. My work spans ARM64 bring-up, Linux boot architecture, transactional operating-system updates, hardware–software integration, and intelligent edge applications.
+
+I enjoy following problems across layers—from firmware and bootloaders to Linux services, multimedia pipelines, and cloud-connected workflows.
+
+## What’s inside
+
+- **Oracle:** ARM64 platform integration, bootc/OSTree migration, GRUB2 watchdog protection, automatic rollback, accelerated multimedia, and IoT infrastructure exploration.
+- **Voicy Labs:** Voice AI services supporting leasing-office call handling and appointment workflows, helping staff focus on customers who need their attention.
+- **Tata Consultancy Services:** Telecom simulation and distributed services across 5G, LTE, and transport nodes.
+- **VB Engineering:** Android geolocation alerts, offline caching, and reliable notifications.
+- **Exposys Data Labs:** Arduino-based soil moisture monitoring and MQTT telemetry.
+
+Personal projects include an **Edge AI Voice Assistant**, **Skills Highlighter** browser extension, and **Munchies** food-ordering application.
+
+## Features
+
+- Interactive CSS 3D hardware model with rotation and assembled/exploded views.
+- Selectable Linux boot, recovery, and multimedia views.
+- IoT onboarding, telemetry, and lifecycle exploration.
+- Voice-pipeline and telecom-node interactions.
+- Responsive layouts, readable typography, and reduced-motion support.
+- Printable résumé generated from shared portfolio content.
+- Independently replaceable images and centralized content configuration.
+- Static export with GitHub Pages deployment.
+
+The hardware and office illustrations are conceptual visuals. Interactive system views explain the work; they are not live connections to devices or employer systems.
+
+## Tech stack
+
+**Next.js · React · TypeScript · CSS · GitHub Actions · GitHub Pages**
+
+The site uses CSS 3D transforms and animations without a separate 3D rendering library. No backend or API keys are required.
 
 ## Run locally
 
-```sh
-npm install
-npm run dev -- --port 3000
+Use Node.js 22 and npm.
+
+```bash
+git clone https://github.com/santhureddie/portfolio.git
+cd portfolio
+npm ci
+npm run dev
 ```
 
-Open http://localhost:3000. Node.js 20+ is recommended. `npm run typecheck` validates TypeScript. `npm run build` exports a deployable static site to `out/`. For static preview: `python3 -m http.server 3000 --directory out`.
+Open [localhost:3000](http://localhost:3000).
 
-## Replace any image
+If your machine hits a file-watcher limit, use:
 
-1. Copy your image (JPG, PNG, WebP, AVIF or SVG) into `public/images/`.
-2. Open `app/content.ts`.
-3. Replace the appropriate entry in `images` with a regular image definition. Example:
+```bash
+WATCHPACK_POLLING=true npm run dev
+```
+
+## Project structure
+
+```text
+app/
+├── content.ts          # Experience, projects, skills, links, and image definitions
+├── page.tsx            # Portfolio layout and interactive components
+├── globals.css         # Styling, typography, animations, and responsive layouts
+├── layout.tsx          # Root layout and page metadata
+└── resume/
+    └── page.tsx        # Printable résumé
+public/
+└── images/             # Illustrations and replacement images
+.github/
+└── workflows/
+    └── nextjs.yml      # Build and GitHub Pages deployment
+next.config.ts          # Static export and deployment path configuration
+```
+
+## Customize content and images
+
+Edit **`app/content.ts`** to update experience, accomplishments, projects, skills, contact information, and image paths. Edit **`app/globals.css`** for colors, typography, spacing, and responsive behavior.
+
+To replace an image:
+
+1. Add your file to `public/images/`.
+2. Update the corresponding entry in `images` inside `app/content.ts`:
 
 ```ts
 voicy: {
-  src: '/images/my-voice-agent.webp',
-  alt: 'My voice agent visualization',
+  src: '/images/my-call-assistant.webp',
+  alt: 'Appointment booking and call assistance for leasing offices',
 },
 ```
 
-Keep the entry name (`voicy`) and replace its entire `atlas(...)` value. Do **not** retain `atlasIndex` for a normal image. The layout and interactions stay intact. The artwork keys are `hardware`, `voicy`, `tcs`, `vb`, `exposys`, `edge`, `highlighter`, and `munchies`. `hardware` appears in the hero and Oracle showcase. Any image dimensions work; square or nearly square images with dark backgrounds work best. Images are contained, never stretched. An optional `position: 'center'` sets alignment.
+Replace the entire existing value. For a standalone image, omit `atlasIndex`; that property is only for the bundled illustration sheet. Use the local `/images/...` path—the application adds the deployment prefix automatically.
 
-Bundled original illustrations use a single local atlas, displayed as eight independent CSS regions. It is self-contained and requires no image hosting. The illustrations, including the UNO Q style board, are conceptual rather than technical product photography. The actual interactive board model is independent CSS 3D geometry and is not affected by changing artwork.
+Set `profile.github`, `profile.resume`, and each project’s `href` to enable those links. Empty optional links are hidden. If no external résumé URL is provided, the site uses its built-in printable résumé page.
 
-## Edit text, links and résumé
+## Build and deploy
 
-All experience, skills, projects, image definitions and contact links live in `app/content.ts`. Set `profile.github` to your public GitHub URL to display the GitHub link. Set `profile.resume` to a PDF URL to use your own résumé; otherwise the résumé button opens a printable page generated from the same content. Set each project's `href` to enable its external project link. Empty links are hidden so visitors never encounter dummy destinations.
+Check types and create a static export:
 
-Colors, typography and breakpoints live in `app/globals.css`. Fonts use Google Fonts with system fallbacks; self-host them if you need a fully offline site.
+```bash
+npm run typecheck
+npm run build
+```
 
-## Interactions
+The deployable website is generated in **`out/`**. To preview that export:
 
-- Oracle: Boot flow / Recovery / Multimedia tabs, component hotspots, selectable boot stages.
-- “Explore 3D model”: actual CSS 3D geometry, drag or use the keyboard-accessible rotation slider, assemble/explode the heatsink and reset orientation.
-- Voicy: STT / LLM / TTS controls and animated voice waveform.
-- TCS: 5G / LTE / Transport node controls.
-- Responsive mobile menu, scroll reveals, scroll progress, email copy, hover motion.
-- System reduced-motion preferences disable decorative movement.
+```bash
+python3 -m http.server 3000 --directory out
+```
 
-No backend, API keys, analytics, or paid services are required. Contact uses your mail client. The recovery and telemetry views illustrate the work; they are not live device connections.
+For GitHub Pages at `/portfolio/`, build with:
 
-## Deploy
-
-Run `npm run build`, then upload `out/` to a static host such as Cloudflare Pages, Netlify or GitHub Pages (root custom domain). For Vercel, use the Next.js preset. For deployment to a subdirectory, configure Next.js `basePath` and prefix local image paths accordingly.
-
-The workspace currently reuses the neighboring project's dependency folder via symlink. A fresh checkout or copy only needs `npm install`; do not distribute `node_modules` or `.next`.
-
-## GitHub Pages: santhureddie/portfolio
-
-The Pages workflow builds and publishes the site at https://santhureddie.github.io/portfolio/.
-Select **GitHub Actions** in the repository's Settings → Pages publishing source.
-The workflow sets `NEXT_PUBLIC_BASE_PATH=/portfolio`, which prefixes Next.js assets,
-illustrations and résumé links. Local development leaves it unset and stays at `/`.
-
-To reproduce the Pages build:
-
-```sh
-npm ci --registry=https://registry.npmjs.org
+```bash
 NEXT_PUBLIC_BASE_PATH=/portfolio npm run build
 ```
 
-The lockfile uses public npm tarball URLs. Avoid regenerating it against an internal
-corporate registry: GitHub-hosted runners cannot fetch those private URLs.
-Pull requests build without publishing; merging to `main` publishes automatically.
+In the repository, select **Settings → Pages → Source → GitHub Actions**. The included workflow checks and builds pull requests, then publishes pushes to `main` at:
+
+**https://santhureddie.github.io/portfolio/**
+
+The workflow sets `NEXT_PUBLIC_BASE_PATH=/portfolio` for the application, image paths, and résumé links. If you rename the repository or move to a root custom domain, update this setting in `.github/workflows/nextjs.yml` accordingly.
+
+Dependencies use the public npm registry so GitHub-hosted runners can install them without access to an internal corporate registry.
+
+## Contact
+
+Interested in embedded Linux, platform software, edge AI, or connected systems?
+
+- **Email:** [santhoshkumarreddyjampana@gmail.com](mailto:santhoshkumarreddyjampana@gmail.com)
+- **LinkedIn:** [santhoshjampana](https://www.linkedin.com/in/santhoshjampana/)
+- **GitHub:** [santhureddie](https://github.com/santhureddie)
